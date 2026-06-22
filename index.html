@@ -1,112 +1,376 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gestión de Contenido Referencial</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        header {
+            background-color: #212529;
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        section {
+            margin-top: 90px;
+        }
+
+        .card {
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+        }
+
+        aside {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        footer {
+            background-color: #212529;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 400px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 28px;
+            }
+
+            iframe {
+                height: 250px;
+            }
+        }
+    </style>
+
 </head>
+
 <body>
+
+    <!-- HEADER -->
 
     <header>
         <h1>Sistema de Gestión de Contenido Referencial</h1>
+        <p>Organiza imágenes, videos, notas y recursos creativos en un solo lugar.</p>
     </header>
 
-    <nav>
-        <ul>
-            <li><a href="#inicio">Inicio</a></li>
-            <li><a href="#quienes-somos">Quiénes Somos</a></li>
-            <li><a href="#servicios">Servicios o Productos</a></li>
-            <li><a href="#contacto">Contacto</a></li>
-        </ul>
+    <!-- NAVBAR -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+        <div class="container">
+
+            <a class="navbar-brand" href="#">Sistema Referencial</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#menuPrincipal">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menuPrincipal">
+
+                <ul class="navbar-nav ms-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#inicio">Inicio</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#quienes-somos">Quiénes Somos</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#servicios">Servicios</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contacto">Contacto</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
     </nav>
 
     <main>
 
-        <section id="inicio">
+        <!-- INICIO -->
+
+        <section id="inicio" class="container text-center p-5">
+
             <h2>Inicio</h2>
-            <p>
+
+            <p class="lead">
                 Bienvenido al Sistema de Gestión de Contenido Referencial, una plataforma diseñada para que artistas,
-                ilustradores y creadores digitales organicen todas sus referencias en un solo lugar. Aquí es posible
-                almacenar imágenes, videos, GIF, enlaces y notas importantes para facilitar el desarrollo de proyectos
-                creativos y mejorar la productividad durante el proceso de diseño.
+                ilustradores y creadores digitales organicen imágenes, videos, GIF, enlaces y notas en un único espacio,
+                optimizando su flujo de trabajo y facilitando el desarrollo de proyectos creativos.
             </p>
+
+            <a href="#servicios" class="btn btn-primary btn-lg">
+                Explorar servicios
+            </a>
+
         </section>
 
-        <section id="quienes-somos">
-            <h2>Quiénes Somos</h2>
+        <!-- QUIÉNES SOMOS -->
 
-            <article>
-                <p>
-                    Somos un proyecto enfocado en ofrecer una solución para la organización de contenido utilizado por
-                    artistas y diseñadores durante sus procesos creativos. La plataforma permite guardar imágenes de
-                    referencia, videos, GIF, enlaces web y cuadros de texto para mantener toda la información importante
-                    reunida en un único espacio. Además, incorpora un área donde los usuarios pueden realizar bocetos o
-                    dibujos rápidos utilizando el mouse o una tableta gráfica, permitiendo plasmar ideas sin cambiar de
-                    aplicación. Nuestro objetivo es simplificar la recopilación de recursos, reducir el tiempo dedicado a
-                    buscar archivos dispersos y proporcionar un entorno cómodo para planificar proyectos de ilustración,
-                    animación, diseño o cualquier disciplina artística. Gracias a esta organización, los usuarios pueden
-                    concentrarse más en crear y menos en administrar sus referencias.
-                </p>
+        <section id="quienes-somos" class="container">
 
-                <img src="https://www.industriaanimacion.com/wp-content/uploads/2020/10/fotos-720x338.jpg"
-                     alt="Espacio de trabajo para artistas digitales"
-                     width="500">
-            </article>
+            <div class="row align-items-center">
+
+                <div class="col-md-6">
+
+                    <article>
+
+                        <h2>Quiénes Somos</h2>
+
+                        <p>
+                            Somos un proyecto enfocado en desarrollar una plataforma que facilite la organización de
+                            recursos utilizados por artistas y diseñadores durante sus procesos creativos. Nuestro
+                            sistema permite almacenar imágenes de referencia, videos, GIF, enlaces, cuadros de texto y
+                            notas importantes para mantener toda la información reunida en un solo lugar. Además,
+                            incorpora herramientas para realizar bocetos rápidos con mouse o tableta gráfica,
+                            permitiendo capturar ideas sin cambiar de aplicación. El objetivo es reducir el tiempo
+                            invertido en buscar archivos dispersos y ofrecer un entorno ordenado que impulse la
+                            creatividad y mejore la productividad en proyectos de ilustración, diseño y arte digital.
+                        </p>
+
+                    </article>
+
+                </div>
+
+                <div class="col-md-6 text-center">
+
+                    <img src="https://www.industriaanimacion.com/wp-content/uploads/2020/10/fotos-720x338.jpg"
+                        class="img-fluid rounded shadow"
+                        alt="Espacio de trabajo para artistas digitales">
+
+                </div>
+
+            </div>
+
         </section>
 
-        <section id="servicios">
-            <h2>Servicios o Productos</h2>
+        <!-- SERVICIOS -->
 
-            <ul>
-                <li>Almacenamiento de imágenes de referencia.</li>
-                <li>Gestión de videos y GIF para inspiración.</li>
-                <li>Creación y organización de notas y cuadros de texto.</li>
-                <li>Guardado de enlaces útiles para proyectos creativos.</li>
-                <li>Área para realizar bocetos con mouse o tableta gráfica.</li>
-                <li>Organización de recursos por categorías y proyectos.</li>
-            </ul>
+        <section id="servicios" class="container">
+
+            <h2 class="text-center m-3">
+                Servicios o Productos
+            </h2>
+
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    <div class="card p-3 m-3">
+
+                        <h5>Imágenes de referencia</h5>
+
+                        <p>
+                            Guarda y organiza imágenes importantes para cada proyecto creativo.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="card p-3 m-3">
+
+                        <h5>Videos y GIF</h5>
+
+                        <p>
+                            Administra recursos multimedia útiles para inspiración artística.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="card p-3 m-3">
+
+                        <h5>Bocetos digitales</h5>
+
+                        <p>
+                            Crea dibujos rápidos utilizando mouse o tableta gráfica.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </section>
 
-        <section id="contacto">
-            <h2>Contacto</h2>
+        <!-- CONTACTO -->
 
-            <p><strong>Correo electrónico:</strong> erickdavidgomezcahuana@gmail.com</p>
+        <section id="contacto" class="container">
+
+            <h2 class="text-center">
+                Contacto
+            </h2>
+
+            <p><strong>Correo:</strong> erickdavidgomezcahuana@gmail.com</p>
             <p><strong>Teléfono:</strong> +593 97 931 1689</p>
             <p><strong>Dirección:</strong> Quito, Ecuador</p>
 
-            <p>
-                Redes sociales:
-                <a href="https://www.facebook.com" target="_blank">Facebook</a> |
-                <a href="https://www.instagram.com" target="_blank">Instagram</a> 
-            </p>
+            <div class="mb-4">
 
-            <h3>Video relacionado</h3>
+                <a class="btn btn-primary"
+                    href="mailto:erickdavidgomezcahuana@gmail.com">
+                    Enviar correo
+                </a>
+
+                <a class="btn btn-danger"
+                    href="https://www.instagram.com"
+                    target="_blank">
+                    Instagram
+                </a>
+
+                <a class="btn btn-secondary"
+                    href="https://www.facebook.com"
+                    target="_blank">
+                    Facebook
+                </a>
+
+            </div>
+
+            <!-- Formulario -->
+
+            <form>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Nombre
+                    </label>
+
+                    <input type="text"
+                        class="form-control"
+                        placeholder="Ingrese su nombre">
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Correo electrónico
+                    </label>
+
+                    <input type="email"
+                        class="form-control"
+                        placeholder="correo@ejemplo.com">
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Asunto
+                    </label>
+
+                    <input type="text"
+                        class="form-control">
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Mensaje
+                    </label>
+
+                    <textarea class="form-control"
+                        rows="5"></textarea>
+
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    Enviar mensaje
+                </button>
+
+            </form>
+
+            <h3 class="mt-5">
+                Video relacionado
+            </h3>
 
             <iframe
-                width="560"
-                height="315"
-                src="https://www.youtube.com/embed/6G8g5fgEUHE"
+                src="https://www.youtube.com/embed/6G8g5fgEUHE?si=FhEF903k4tXtb6mD"
                 title="Video de YouTube"
                 allowfullscreen>
             </iframe>
+
         </section>
 
-        <aside>
+        <!-- ASIDE -->
+
+        <aside class="container">
+
             <h2>Información adicional</h2>
-            <p>Horario de atención: lunes a viernes de 09:00 am a 18:00 pm</p>
+
             <p>
-                Próximamente se añadirán funciones para compartir proyectos, sincronización en la nube
-                y herramientas avanzadas para clasificar referencias artísticas.
+                Horario de atención: lunes a viernes de 09:00 a 18:00.
             </p>
+
+            <p>
+                Próximamente se incorporarán herramientas colaborativas,
+                sincronización en la nube y opciones avanzadas para organizar
+                referencias artísticas de forma más eficiente.
+            </p>
+
         </aside>
 
     </main>
 
+    <!-- FOOTER -->
+
     <footer>
-        <p>Realizado por: Erick David Gómez Cahuana</p>
-        <p>Asignatura: Desarrollo de Aplicaciones Web, Paralelo D</p>
-        <p>Año:2026</p>
+
+        <p><strong>Realizado por:</strong> Erick David Gómez Cahuana</p>
+
+        <p>Asignatura: Desarrollo de Aplicaciones Web - Paralelo D</p>
+
+        <p>Año: 2026</p>
+
     </footer>
 
+    <!-- Bootstrap JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>
