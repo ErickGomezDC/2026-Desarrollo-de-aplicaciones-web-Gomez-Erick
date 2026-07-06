@@ -1,0 +1,107 @@
+/* ===== ESTILOS GENERALES ===== */
+
+body{
+    background-color:#f4f6f9;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+/* ===== HEADER ===== */
+
+header{
+    background:#212529;
+    color:white;
+    padding:40px;
+    text-align:center;
+}
+
+/* ===== SECCIONES ===== */
+
+section{
+    margin-top:40px;
+    margin-bottom:40px;
+}
+
+/* ===== TARJETAS ===== */
+
+.card{
+    border:none;
+    border-radius:15px;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0px 10px 20px rgba(0,0,0,0.2);
+}
+
+/* ===== IMÁGENES ===== */
+
+img{
+    border-radius:10px;
+}
+
+/* ===== FORMULARIOS ===== */
+
+form{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0px 4px 10px rgba(0,0,0,.1);
+}
+
+/* ===== ASIDE ===== */
+
+aside{
+    background:#ffffff;
+    padding:25px;
+    margin-top:40px;
+    border-radius:15px;
+    box-shadow:0px 4px 10px rgba(0,0,0,.1);
+}
+
+/* ===== FOOTER ===== */
+
+footer{
+    background:#212529;
+    color:white;
+    text-align:center;
+    padding:20px;
+    margin-top:40px;
+}
+
+/* ===== BOTONES ===== */
+
+.btn{
+    border-radius:10px;
+}
+
+/* ===== MENSAJES DE VALIDACIÓN ===== */
+
+small{
+    font-size:14px;
+}
+
+/* ===== RESPONSIVO ===== */
+
+@media (max-width: 768px) {
+
+    header{
+        padding:25px;
+    }
+
+    iframe{
+        width:100%;
+        height:250px;
+    }
+
+    h1{
+        font-size:28px;
+    }
+
+}
+
+/* ===== TARJETAS DINÁMICAS ===== */
+
+#listaReferencias .card{
+    min-height:220px;
+}

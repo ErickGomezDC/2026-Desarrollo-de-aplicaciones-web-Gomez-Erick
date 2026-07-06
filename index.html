@@ -7,71 +7,8 @@
     <title>Sistema de Gestión de Contenido Referencial</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        body{
-            background:#f4f4f4;
-            font-family:Arial, Helvetica, sans-serif;
-        }
-
-        header{
-            background:#212529;
-            color:white;
-            padding:40px;
-            text-align:center;
-        }
-
-        section{
-            margin-top:80px;
-        }
-
-        .card{
-            box-shadow:0 4px 10px rgba(0,0,0,.2);
-            transition:.2s;
-        }
-
-        .card:hover{
-            transform:scale(1.03);
-        }
-
-        aside{
-            background:white;
-            border-radius:10px;
-            padding:20px;
-            margin-top:30px;
-            box-shadow:0 3px 8px rgba(0,0,0,.15);
-        }
-
-        footer{
-            background:#212529;
-            color:white;
-            text-align:center;
-            padding:20px;
-            margin-top:40px;
-        }
-
-        iframe{
-            width:100%;
-            height:400px;
-        }
-
-        #mensaje{
-            font-weight:bold;
-        }
-
-        @media(max-width:768px){
-
-            header h1{
-                font-size:28px;
-            }
-
-            iframe{
-                height:250px;
-            }
-
-        }
-
-    </style>
+    
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -371,6 +308,8 @@ Video relacionado
 </h3>
 
 <iframe
+class="w-100 rounded shadow"
+height="400"
 src="https://www.youtube.com/embed/6G8g5fgEUHE?si=FhEF903k4tXtb6mD"
 allowfullscreen>
 </iframe>
@@ -407,6 +346,8 @@ type="text"
 class="form-control"
 placeholder="Nombre de la referencia">
 
+<small id="errorNombre" class="text-danger"></small>
+
 </div>
 
 <div class="mb-3">
@@ -423,6 +364,8 @@ class="form-control"
 rows="4"
 placeholder="Describe la referencia">
 </textarea>
+
+<small id="errorDescripcion" class="text-danger"></small>
 
 </div>
 
@@ -459,6 +402,7 @@ Modelado 3D
 </option>
 
 </select>
+<small id="errorCategoria" class="text-danger"></small>
 
 </div>
 
