@@ -17,6 +17,12 @@ const listaReferencias = document.getElementById("listaReferencias");
 const total = document.getElementById("total");
 
 let contador = 0;
+// ===============================
+// ARREGLO DE REFERENCIAS
+// Para futuras plantillas Flask
+// ===============================
+
+let referencias = [];
 
 
 // ===============================
@@ -188,101 +194,17 @@ formulario.addEventListener("submit", function(event){
 
     mensaje.textContent =
     "Referencia agregada correctamente.";
-        // ===============================
-    // CREAR COLUMNA
-    // ===============================
+    const referencia = {
 
-    const columna = document.createElement("div");
+        nombre: nombre.value,
+        descripcion: descripcion.value,
+        categoria: categoria.value
 
-    columna.className = "col-md-6 col-lg-4 mt-4";
+    };
 
+    referencias.push(referencia);
 
-    // ===============================
-    // CREAR TARJETA
-    // ===============================
-
-    const tarjeta = document.createElement("div");
-
-    tarjeta.className = "card shadow p-3 h-100";
-
-
-    // ===============================
-    // TÍTULO
-    // ===============================
-
-    const titulo = document.createElement("h4");
-
-    titulo.textContent = nombre.value;
-
-
-    // ===============================
-    // DESCRIPCIÓN
-    // ===============================
-
-    const texto = document.createElement("p");
-
-    texto.textContent = descripcion.value;
-
-
-    // ===============================
-    // CATEGORÍA
-    // ===============================
-
-    const tipo = document.createElement("span");
-
-    tipo.className = "badge bg-warning text-dark mb-3";
-
-    tipo.textContent = categoria.value;
-
-
-    // ===============================
-    // BOTÓN ELIMINAR
-    // ===============================
-
-    const botonEliminar = document.createElement("button");
-
-    botonEliminar.className = "btn btn-danger mt-2";
-
-    botonEliminar.textContent = "Eliminar";
-
-
-    botonEliminar.addEventListener("click", function(){
-
-        listaReferencias.removeChild(columna);
-
-        contador--;
-
-        total.textContent = contador;
-
-    });
-
-
-    // ===============================
-    // AGREGAR ELEMENTOS
-    // ===============================
-
-    tarjeta.appendChild(titulo);
-    tarjeta.appendChild(texto);
-    tarjeta.appendChild(tipo);
-    tarjeta.appendChild(botonEliminar);
-
-    columna.appendChild(tarjeta);
-
-    listaReferencias.appendChild(columna);
-
-
-    // ===============================
-    // ACTUALIZAR CONTADOR
-    // ===============================
-
-    contador++;
-
-    total.textContent = contador;
-
-
-    // ===============================
-    // LIMPIAR FORMULARIO
-    // ===============================
+    renderizarReferencias();
 
     formulario.reset();
 
@@ -301,3 +223,97 @@ formulario.addEventListener("submit", function(event){
     errorCategoria.textContent = "";
 
 });
+
+// ===============================
+// RENDERIZAR REFERENCIAS
+// ===============================
+
+function renderizarReferencias(){
+
+    listaReferencias.innerHTML = "";
+
+    contador = referencias.length;
+
+    total.textContent = contador;
+
+
+    // ===============================
+    // CONDICIÓN
+    // ===============================
+
+    if(referencias.length === 0){
+
+        listaReferencias.innerHTML = `
+            <div class="col-12">
+                <div class="alert alert-info text-center">
+                    No existen referencias registradas.
+                </div>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    // ===============================
+    // RECORRER EL ARREGLO
+    // ===============================
+
+    referencias.forEach(function(referencia, indice){
+
+        const columna = document.createElement("div");
+
+        columna.className = "col-md-6 col-lg-4 mt-4";
+
+
+        const tarjeta = document.createElement("div");
+
+        tarjeta.className = "card shadow p-3 h-100";
+
+
+        const titulo = document.createElement("h4");
+
+        titulo.textContent = referencia.nombre;
+
+
+        const texto = document.createElement("p");
+
+        texto.textContent = referencia.descripcion;
+
+
+        const tipo = document.createElement("span");
+
+        tipo.className = "badge bg-warning text-dark mb-3";
+
+        tipo.textContent = referencia.categoria;
+
+
+        const botonEliminar = document.createElement("button");
+
+        botonEliminar.className = "btn btn-danger mt-2";
+
+        botonEliminar.textContent = "Eliminar";
+
+
+        botonEliminar.addEventListener("click", function(){
+
+            referencias.splice(indice,1);
+
+            renderizarReferencias();
+
+        });
+
+
+        tarjeta.appendChild(titulo);
+        tarjeta.appendChild(texto);
+        tarjeta.appendChild(tipo);
+        tarjeta.appendChild(botonEliminar);
+
+        columna.appendChild(tarjeta);
+
+        listaReferencias.appendChild(columna);
+
+    });
+
+}
