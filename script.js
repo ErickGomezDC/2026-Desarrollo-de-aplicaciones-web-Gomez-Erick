@@ -15,6 +15,7 @@ const errorCategoria = document.getElementById("errorCategoria");
 const mensaje = document.getElementById("mensaje");
 const listaReferencias = document.getElementById("listaReferencias");
 const total = document.getElementById("total");
+const spinnerCarga = document.getElementById("spinnerCarga");
 
 let contador = 0;
 // ===============================
@@ -190,10 +191,15 @@ formulario.addEventListener("submit", function(event){
 
     }
 
-    mensaje.className = "alert alert-success mt-3";
+mensaje.className = "alert alert-info mt-3";
 
-    mensaje.textContent =
-    "Referencia agregada correctamente.";
+mensaje.textContent =
+"Procesando información...";
+
+spinnerCarga.classList.remove("d-none");
+
+setTimeout(function(){
+
     const referencia = {
 
         nombre: nombre.value,
@@ -206,8 +212,14 @@ formulario.addEventListener("submit", function(event){
 
     renderizarReferencias();
 
-    formulario.reset();
+    spinnerCarga.classList.add("d-none");
 
+    mensaje.className = "alert alert-success mt-3";
+
+    mensaje.textContent =
+    "Referencia agregada correctamente.";
+
+    formulario.reset();
 
     nombre.classList.remove("is-valid");
     descripcion.classList.remove("is-valid");
@@ -216,11 +228,14 @@ formulario.addEventListener("submit", function(event){
     nombre.classList.remove("is-invalid");
     descripcion.classList.remove("is-invalid");
     categoria.classList.remove("is-invalid");
-    
 
     errorNombre.textContent = "";
     errorDescripcion.textContent = "";
     errorCategoria.textContent = "";
+
+},1000);
+
+return;
 
 });
 

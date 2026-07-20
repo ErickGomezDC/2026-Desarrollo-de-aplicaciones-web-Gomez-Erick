@@ -109,6 +109,16 @@ Explorar servicios
 
 </a>
 
+<button
+type="button"
+class="btn btn-outline-dark btn-lg ms-3"
+data-bs-toggle="modal"
+data-bs-target="#modalProyecto">
+
+Conocer el proyecto
+
+</button>
+
 </section>
 
 <section id="quienes-somos" class="container">
@@ -426,6 +436,28 @@ Agregar Referencia
 
 </button>
 
+<div
+id="spinnerCarga"
+class="text-center mt-3 d-none">
+
+<div
+class="spinner-border text-primary"
+role="status">
+
+<span class="visually-hidden">
+Cargando...
+</span>
+
+</div>
+
+<p class="mt-2">
+
+Procesando información...
+
+</p>
+
+</div>
+
 </form>
 
 <p
@@ -489,6 +521,81 @@ class="row">
 
 </footer>
 <!-- ===== FIN FOOTER ===== -->
+
+<!-- ========================================= -->
+<!-- FUTURA PLANTILLA FLASK - MODAL -->
+<!-- ========================================= -->
+
+<div
+class="modal fade"
+id="modalProyecto"
+tabindex="-1">
+
+<div class="modal-dialog modal-lg">
+
+<div class="modal-content">
+
+<div class="modal-header bg-primary text-white">
+
+<h5 class="modal-title">
+
+Sistema de Gestión de Contenido Referencial
+
+</h5>
+
+<button
+type="button"
+class="btn-close btn-close-white"
+data-bs-dismiss="modal">
+
+</button>
+
+</div>
+
+<div class="modal-body">
+
+<p>
+
+Este proyecto fue desarrollado para ayudar a artistas,
+ilustradores y diseñadores a organizar referencias
+creativas de manera sencilla y eficiente.
+
+</p>
+
+<ul>
+
+<li>Registro dinámico de referencias.</li>
+
+<li>Validaciones en tiempo real.</li>
+
+<li>Organización mediante categorías.</li>
+
+<li>Interfaz desarrollada con Bootstrap.</li>
+
+<li>Preparado para integrarse con Flask.</li>
+
+</ul>
+
+</div>
+
+<div class="modal-footer">
+
+<button
+class="btn btn-secondary"
+data-bs-dismiss="modal">
+
+Cerrar
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 
 <!-- Bootstrap -->
 

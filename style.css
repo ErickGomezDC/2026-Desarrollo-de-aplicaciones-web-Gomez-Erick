@@ -138,3 +138,70 @@ small{
     color:#0d6efd;
     font-size:24px;
 }
+
+/* MEJORAS CON BOOTSTRAP */
+
+
+/* Navbar */
+
+.navbar{
+    box-shadow:0 4px 10px rgba(0,0,0,.15);
+}
+
+/* Botones */
+
+.btn{
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+
+/* Modal */
+
+.modal-content{
+    border-radius:20px;
+    border:none;
+}
+
+.modal-header{
+    border-top-left-radius:20px;
+    border-top-right-radius:20px;
+}
+
+/* Spinner */
+
+#spinnerCarga{
+    margin-top:20px;
+}
+
+/* Tarjetas dinámicas */
+
+#listaReferencias .card{
+    border:0;
+    overflow:hidden;
+}
+
+#listaReferencias .card h4{
+    color:#0d6efd;
+    font-weight:bold;
+}
+
+/* Formulario */
+
+#formReferencia{
+    border:1px solid #dee2e6;
+}
+
+/* Alertas */
+
+.alert{
+    border-radius:15px;
+}
+
+/* Contador */
+
+#total{
+    font-size:28px;
+}
