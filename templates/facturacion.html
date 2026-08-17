@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <h1>Facturación</h1>
+
+        <p class="lead">
+            Consulta información demostrativa de las facturas
+            generadas en el sistema.
+        </p>
+
+    </div>
+
+    <div class="table-responsive">
+
+        <table class="table table-striped table-hover shadow">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>N.º Factura</th>
+                    <th>Cliente</th>
+                    <th>Producto</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+
+                    <td>001-001</td>
+
+                    <td>
+                        Cliente 1
+                    </td>
+
+                    <td>
+                        Kit de ilustración
+                    </td>
+
+                    <td>
+                        $25.00
+                    </td>
+
+                    <td>
+
+                        <span class="badge bg-success">
+                            Pagada
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>001-002</td>
+
+                    <td>
+                        Cliente 2
+                    </td>
+
+                    <td>
+                        Recursos de animación
+                    </td>
+
+                    <td>
+                        $35.00
+                    </td>
+
+                    <td>
+
+                        <span class="badge bg-warning text-dark">
+                            Pendiente
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>001-003</td>
+
+                    <td>
+                        Cliente 3
+                    </td>
+
+                    <td>
+                        Recursos de diseño
+                    </td>
+
+                    <td>
+                        $45.00
+                    </td>
+
+                    <td>
+
+                        <span class="badge bg-success">
+                            Pagada
+                        </span>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+{% endblock %}

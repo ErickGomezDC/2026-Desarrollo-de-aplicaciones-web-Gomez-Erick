@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <h1>Gestión de Proveedores</h1>
+
+        <p class="lead">
+            Consulta información de los proveedores registrados
+            para el sistema.
+        </p>
+
+    </div>
+
+
+    <!-- Información de proveedores -->
+
+    <div class="row g-4">
+
+
+        <!-- Proveedor 1 -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-body">
+
+                    <h5 class="card-title">
+                        Proveedor Tecnológico
+                    </h5>
+
+                    <p class="card-text">
+
+                        Empresa dedicada al suministro de equipos
+                        tecnológicos y accesorios para el sistema.
+
+                    </p>
+
+                    <span class="badge bg-primary">
+                        Tecnología
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Proveedor 2 -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-body">
+
+                    <h5 class="card-title">
+                        Proveedor de Oficina
+                    </h5>
+
+                    <p class="card-text">
+
+                        Proveedor de materiales, papelería y
+                        suministros necesarios para la operación.
+
+                    </p>
+
+                    <span class="badge bg-success">
+                        Oficina
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Proveedor 3 -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-body">
+
+                    <h5 class="card-title">
+                        Proveedor Multimedia
+                    </h5>
+
+                    <p class="card-text">
+
+                        Proporciona recursos y herramientas
+                        relacionadas con contenido multimedia.
+
+                    </p>
+
+                    <span class="badge bg-warning text-dark">
+                        Multimedia
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Mensaje informativo -->
+
+    <div class="alert alert-info mt-5">
+
+        <strong>Información:</strong>
+
+        Los datos mostrados son demostrativos.
+
+    </div>
+
+</section>
+
+{% endblock %}
