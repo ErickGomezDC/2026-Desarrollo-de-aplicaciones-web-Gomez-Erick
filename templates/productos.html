@@ -1,39 +1,102 @@
 {% extends "base.html" %}
 
+{% block title %}
+Productos - Sistema Referencial
+{% endblock %}
+
 {% block content %}
 
 <section class="container py-5">
 
+    <!-- =============================== -->
+    <!-- TÍTULO -->
+    <!-- =============================== -->
+
     <div class="text-center mb-5">
 
-        <h1>Productos</h1>
+        <h2 class="display-5">
+            Productos y Recursos
+        </h2>
 
         <p class="lead">
-            Consulta los productos disponibles en el sistema.
+            {{ nombre_sistema }}
+        </p>
+
+        <p>
+            En esta sección se muestran los recursos registrados
+            dinámicamente mediante Flask y Jinja2.
         </p>
 
     </div>
 
+
+    <!-- =============================== -->
+    <!-- CONTENEDOR DE TARJETAS -->
+    <!-- =============================== -->
+
     <div class="row g-4">
 
+        {% for producto in productos %}
+
         <div class="col-md-6 col-lg-4">
 
-            <div class="card h-100 shadow">
+            <div class="card shadow h-100">
 
                 <div class="card-body">
 
+                    <!-- NOMBRE -->
                     <h5 class="card-title">
-                        Kit de ilustración
+
+                        {{ producto.nombre }}
+
                     </h5>
 
+
+                    <!-- CATEGORÍA -->
+                    <span class="badge bg-primary mb-3">
+
+                        {{ producto.categoria|upper }}
+
+                    </span>
+
+
+                    <!-- DESCRIPCIÓN -->
                     <p class="card-text">
-                        Recursos básicos para realizar ilustraciones
-                        digitales y tradicionales.
+
+                        {{ producto.descripcion }}
+
                     </p>
 
-                    <span class="badge bg-primary">
-                        Ilustración
-                    </span>
+
+                    <!-- =============================== -->
+                    <!-- CONDICIONAL -->
+                    <!-- =============================== -->
+
+                    {% if producto.estado == "Disponible" %}
+
+                        <div class="alert alert-success">
+
+                            <strong>Disponible</strong>
+
+                            <br>
+
+                            Este recurso está disponible.
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="alert alert-danger">
+
+                            <strong>Agotado</strong>
+
+                            <br>
+
+                            Este recurso no está disponible actualmente.
+
+                        </div>
+
+                    {% endif %}
 
                 </div>
 
@@ -41,57 +104,19 @@
 
         </div>
 
+        {% endfor %}
 
-        <div class="col-md-6 col-lg-4">
-
-            <div class="card h-100 shadow">
-
-                <div class="card-body">
-
-                    <h5 class="card-title">
-                        Recursos de animación
-                    </h5>
-
-                    <p class="card-text">
-                        Material de referencia para proyectos
-                        de animación.
-                    </p>
-
-                    <span class="badge bg-success">
-                        Animación
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
+    </div>
 
 
-        <div class="col-md-6 col-lg-4">
+    <!-- =============================== -->
+    <!-- MENSAJE FINAL -->
+    <!-- =============================== -->
 
-            <div class="card h-100 shadow">
+    <div class="alert alert-info text-center mt-5">
 
-                <div class="card-body">
-
-                    <h5 class="card-title">
-                        Recursos de diseño
-                    </h5>
-
-                    <p class="card-text">
-                        Recursos visuales utilizados en proyectos
-                        de diseño gráfico.
-                    </p>
-
-                    <span class="badge bg-warning text-dark">
-                        Diseño
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
+        Los registros mostrados en esta sección son datos
+        demostrativos generados desde Python.
 
     </div>
 

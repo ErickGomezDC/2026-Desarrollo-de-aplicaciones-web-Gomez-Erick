@@ -18,9 +18,10 @@ const total = document.getElementById("total");
 const spinnerCarga = document.getElementById("spinnerCarga");
 
 let contador = 0;
+
+
 // ===============================
 // ARREGLO DE REFERENCIAS
-// Para futuras plantillas Flask
 // ===============================
 
 let referencias = [];
@@ -38,11 +39,9 @@ function validarNombre(){
         nombre.classList.add("is-invalid");
 
         errorNombre.className = "text-danger";
-
         errorNombre.textContent = "El nombre es obligatorio.";
 
         return false;
-
     }
 
     if(nombre.value.trim().length < 3){
@@ -51,22 +50,18 @@ function validarNombre(){
         nombre.classList.add("is-invalid");
 
         errorNombre.className = "text-danger";
-
         errorNombre.textContent = "Debe tener al menos 3 caracteres.";
 
         return false;
-
     }
 
     nombre.classList.remove("is-invalid");
     nombre.classList.add("is-valid");
 
     errorNombre.className = "text-success";
-
     errorNombre.textContent = "Nombre válido.";
 
     return true;
-
 }
 
 
@@ -82,11 +77,9 @@ function validarDescripcion(){
         descripcion.classList.add("is-invalid");
 
         errorDescripcion.className = "text-danger";
-
         errorDescripcion.textContent = "La descripción es obligatoria.";
 
         return false;
-
     }
 
     if(descripcion.value.trim().length < 15){
@@ -95,24 +88,21 @@ function validarDescripcion(){
         descripcion.classList.add("is-invalid");
 
         errorDescripcion.className = "text-danger";
-
-        errorDescripcion.textContent = "Debe contener al menos 15 caracteres.";
+        errorDescripcion.textContent =
+            "Debe contener al menos 15 caracteres.";
 
         return false;
-
     }
 
     descripcion.classList.remove("is-invalid");
     descripcion.classList.add("is-valid");
 
     errorDescripcion.className = "text-success";
-
     errorDescripcion.textContent = "Descripción válida.";
 
     return true;
-
-    
 }
+
 
 // ===============================
 // VALIDAR CATEGORÍA
@@ -126,209 +116,228 @@ function validarCategoria(){
         categoria.classList.add("is-invalid");
 
         errorCategoria.className = "text-danger";
-
         errorCategoria.textContent = "Seleccione una categoría.";
 
         return false;
-
     }
 
     categoria.classList.remove("is-invalid");
     categoria.classList.add("is-valid");
 
     errorCategoria.className = "text-success";
-
     errorCategoria.textContent = "Categoría válida.";
 
     return true;
-
 }
 
 
-// ===============================
-// EVENTOS EN TIEMPO REAL
-// ===============================
+if(formulario){
 
-nombre.addEventListener("input", validarNombre);
+    // ===============================
+    // EVENTOS EN TIEMPO REAL
+    // ===============================
 
-nombre.addEventListener("blur", validarNombre);
+    nombre.addEventListener("input", validarNombre);
 
-descripcion.addEventListener("input", validarDescripcion);
+    nombre.addEventListener("blur", validarNombre);
 
-descripcion.addEventListener("blur", validarDescripcion);
+    descripcion.addEventListener("input", validarDescripcion);
 
-categoria.addEventListener("change", validarCategoria);
+    descripcion.addEventListener("blur", validarDescripcion);
 
-categoria.addEventListener("blur", validarCategoria);
+    categoria.addEventListener("change", validarCategoria);
+
+    categoria.addEventListener("blur", validarCategoria);
 
 
-// ===============================
-// ENVÍO DEL FORMULARIO
-// ===============================
+    // ===============================
+    // ENVÍO DEL FORMULARIO
+    // ===============================
 
-formulario.addEventListener("submit", function(event){
+    formulario.addEventListener("submit", function(event){
 
-    event.preventDefault();
+        event.preventDefault();
 
-    let nombreCorrecto = validarNombre();
+        const nombreCorrecto = validarNombre();
 
-    let descripcionCorrecta = validarDescripcion();
+        const descripcionCorrecta = validarDescripcion();
 
-    let categoriaCorrecta = validarCategoria();
+        const categoriaCorrecta = validarCategoria();
 
-    if(
-        !nombreCorrecto ||
-        !descripcionCorrecta ||
-        !categoriaCorrecta
-    ){
 
-        mensaje.className = "alert alert-danger mt-3";
+        if(
+            !nombreCorrecto ||
+            !descripcionCorrecta ||
+            !categoriaCorrecta
+        ){
+
+            mensaje.className = "alert alert-danger mt-3";
+
+            mensaje.textContent =
+                "Corrija los errores antes de registrar la información.";
+
+            return;
+        }
+
+
+        mensaje.className = "alert alert-info mt-3";
 
         mensaje.textContent =
-        "Corrija los errores antes de registrar la información.";
+            "Procesando información...";
 
-        return;
-
-    }
-
-mensaje.className = "alert alert-info mt-3";
-
-mensaje.textContent =
-"Procesando información...";
-
-spinnerCarga.classList.remove("d-none");
-
-setTimeout(function(){
-
-    const referencia = {
-
-        nombre: nombre.value,
-        descripcion: descripcion.value,
-        categoria: categoria.value
-
-    };
-
-    referencias.push(referencia);
-
-    renderizarReferencias();
-
-    spinnerCarga.classList.add("d-none");
-
-    mensaje.className = "alert alert-success mt-3";
-
-    mensaje.textContent =
-    "Referencia agregada correctamente.";
-
-    formulario.reset();
-
-    nombre.classList.remove("is-valid");
-    descripcion.classList.remove("is-valid");
-    categoria.classList.remove("is-valid");
-
-    nombre.classList.remove("is-invalid");
-    descripcion.classList.remove("is-invalid");
-    categoria.classList.remove("is-invalid");
-
-    errorNombre.textContent = "";
-    errorDescripcion.textContent = "";
-    errorCategoria.textContent = "";
-
-},1000);
-
-return;
-
-});
-
-// ===============================
-// RENDERIZAR REFERENCIAS
-// ===============================
-
-function renderizarReferencias(){
-
-    listaReferencias.innerHTML = "";
-
-    contador = referencias.length;
-
-    total.textContent = contador;
+        spinnerCarga.classList.remove("d-none");
 
 
-    // ===============================
-    // CONDICIÓN
-    // ===============================
+        setTimeout(function(){
 
-    if(referencias.length === 0){
+            const referencia = {
 
-        listaReferencias.innerHTML = `
-            <div class="col-12">
-                <div class="alert alert-info text-center">
-                    No existen referencias registradas.
-                </div>
-            </div>
-        `;
+                nombre: nombre.value.trim(),
 
-        return;
+                descripcion: descripcion.value.trim(),
 
-    }
+                categoria: categoria.value
+
+            };
 
 
-    // ===============================
-    // RECORRER EL ARREGLO
-    // ===============================
-
-    referencias.forEach(function(referencia, indice){
-
-        const columna = document.createElement("div");
-
-        columna.className = "col-md-6 col-lg-4 mt-4";
-
-
-        const tarjeta = document.createElement("div");
-
-        tarjeta.className = "card shadow p-3 h-100";
-
-
-        const titulo = document.createElement("h4");
-
-        titulo.textContent = referencia.nombre;
-
-
-        const texto = document.createElement("p");
-
-        texto.textContent = referencia.descripcion;
-
-
-        const tipo = document.createElement("span");
-
-        tipo.className = "badge bg-warning text-dark mb-3";
-
-        tipo.textContent = referencia.categoria;
-
-
-        const botonEliminar = document.createElement("button");
-
-        botonEliminar.className = "btn btn-danger mt-2";
-
-        botonEliminar.textContent = "Eliminar";
-
-
-        botonEliminar.addEventListener("click", function(){
-
-            referencias.splice(indice,1);
+            referencias.push(referencia);
 
             renderizarReferencias();
 
-        });
+
+            spinnerCarga.classList.add("d-none");
 
 
-        tarjeta.appendChild(titulo);
-        tarjeta.appendChild(texto);
-        tarjeta.appendChild(tipo);
-        tarjeta.appendChild(botonEliminar);
+            mensaje.className = "alert alert-success mt-3";
 
-        columna.appendChild(tarjeta);
+            mensaje.textContent =
+                "Referencia agregada correctamente.";
 
-        listaReferencias.appendChild(columna);
+
+            formulario.reset();
+
+
+            nombre.classList.remove("is-valid");
+            descripcion.classList.remove("is-valid");
+            categoria.classList.remove("is-valid");
+
+            nombre.classList.remove("is-invalid");
+            descripcion.classList.remove("is-invalid");
+            categoria.classList.remove("is-invalid");
+
+
+            errorNombre.textContent = "";
+            errorDescripcion.textContent = "";
+            errorCategoria.textContent = "";
+
+
+        }, 1000);
 
     });
+
+
+    // ===============================
+    // RENDERIZAR REFERENCIAS
+    // ===============================
+
+    function renderizarReferencias(){
+
+        listaReferencias.innerHTML = "";
+
+        contador = referencias.length;
+
+        total.textContent = contador;
+
+
+        // ===============================
+        // CONDICIÓN
+        // ===============================
+
+        if(referencias.length === 0){
+
+            listaReferencias.innerHTML = `
+                <div class="col-12">
+                    <div class="alert alert-info text-center">
+                        No existen referencias registradas.
+                    </div>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        // ===============================
+        // RECORRER EL ARREGLO
+        // ===============================
+
+        referencias.forEach(function(referencia, indice){
+
+            const columna = document.createElement("div");
+
+            columna.className = "col-md-6 col-lg-4 mt-4";
+
+
+            const tarjeta = document.createElement("div");
+
+            tarjeta.className = "card shadow p-3 h-100";
+
+
+            const titulo = document.createElement("h4");
+
+            titulo.textContent = referencia.nombre;
+
+
+            const texto = document.createElement("p");
+
+            texto.textContent = referencia.descripcion;
+
+
+            const tipo = document.createElement("span");
+
+            tipo.className =
+                "badge bg-warning text-dark mb-3";
+
+            tipo.textContent = referencia.categoria;
+
+
+            const botonEliminar =
+                document.createElement("button");
+
+            botonEliminar.className =
+                "btn btn-danger mt-2";
+
+            botonEliminar.textContent = "Eliminar";
+
+
+            botonEliminar.addEventListener(
+                "click",
+                function(){
+
+                    referencias.splice(indice, 1);
+
+                    renderizarReferencias();
+
+                }
+            );
+
+
+            tarjeta.appendChild(titulo);
+
+            tarjeta.appendChild(texto);
+
+            tarjeta.appendChild(tipo);
+
+            tarjeta.appendChild(botonEliminar);
+
+
+            columna.appendChild(tarjeta);
+
+            listaReferencias.appendChild(columna);
+
+        });
+
+    }
 
 }

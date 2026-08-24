@@ -7,7 +7,13 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Sistema de Gestión de Contenido Referencial</title>
+    <title>
+
+        {% block title %}
+        Sistema de Gestión de Contenido Referencial
+        {% endblock %}
+
+    </title>
 
     <!-- Bootstrap -->
     <link
@@ -31,7 +37,9 @@
 
     <div class="container text-center">
 
-        <h1>Sistema de Gestión de Contenido Referencial</h1>
+        <h1>
+            Sistema de Gestión de Contenido Referencial
+        </h1>
 
         <p>
             Organiza imágenes, videos, notas y recursos creativos
@@ -44,107 +52,10 @@
 
 
 <!-- ================================================= -->
-<!-- MENÚ DE NAVEGACIÓN -->
+<!-- COMPONENTE REUTILIZABLE: NAVBAR -->
 <!-- ================================================= -->
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-
-    <div class="container">
-
-        <a
-            class="navbar-brand"
-            href="{{ url_for('inicio') }}">
-
-            Sistema Referencial
-
-        </a>
-
-        <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#menuPrincipal"
-            aria-controls="menuPrincipal"
-            aria-expanded="false"
-            aria-label="Mostrar navegación">
-
-            <span class="navbar-toggler-icon"></span>
-
-        </button>
-
-        <div
-            class="collapse navbar-collapse"
-            id="menuPrincipal">
-
-            <ul class="navbar-nav ms-auto">
-
-                <li class="nav-item">
-
-                    <a
-                        class="nav-link"
-                        href="{{ url_for('inicio') }}">
-
-                        Inicio
-
-                    </a>
-
-                </li>
-
-                <li class="nav-item">
-
-                    <a
-                        class="nav-link"
-                        href="{{ url_for('productos') }}">
-
-                        Productos
-
-                    </a>
-
-                </li>
-
-                <li class="nav-item">
-
-                    <a
-                        class="nav-link"
-                        href="{{ url_for('clientes') }}">
-
-                        Clientes
-
-                    </a>
-
-                </li>
-
-                <li class="nav-item">
-
-                    <a
-                        class="nav-link"
-                        href="{{ url_for('proveedores') }}">
-
-                        Proveedores
-
-                    </a>
-
-                </li>
-
-                <li class="nav-item">
-
-                    <a
-                        class="nav-link"
-                        href="{{ url_for('facturacion') }}">
-
-                        Facturación
-
-                    </a>
-
-                </li>
-
-            </ul>
-
-        </div>
-
-    </div>
-
-</nav>
+{% include "components/navbar.html" %}
 
 
 <!-- ================================================= -->
@@ -161,30 +72,10 @@
 
 
 <!-- ================================================= -->
-<!-- PIE DE PÁGINA -->
+<!-- COMPONENTE REUTILIZABLE: FOOTER -->
 <!-- ================================================= -->
 
-<footer>
-
-    <div class="container text-center">
-
-        <p>
-            <strong>Realizado por:</strong>
-            Erick David Gómez Cahuana
-        </p>
-
-        <p>
-            Asignatura:
-            Desarrollo de Aplicaciones Web - Paralelo D
-        </p>
-
-        <p>
-            Año: 2026
-        </p>
-
-    </div>
-
-</footer>
+{% include "components/footer.html" %}
 
 
 <!-- ================================================= -->
