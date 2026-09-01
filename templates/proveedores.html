@@ -10,7 +10,9 @@ Proveedores - Sistema Referencial
 
     <div class="text-center mb-5">
 
-        <h1>Gestión de Proveedores</h1>
+        <h1>
+            Gestión de Proveedores
+        </h1>
 
         <p class="lead">
             Consulta información de los proveedores registrados
@@ -20,112 +22,117 @@ Proveedores - Sistema Referencial
     </div>
 
 
-    <!-- Información de proveedores -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-    <div class="row g-4">
+        <h2>
+            Proveedores
+        </h2>
 
+        <a
+            href="{{ url_for('formulario_proveedor') }}"
+            class="btn btn-success">
 
-        <!-- Proveedor 1 -->
+            + Registrar Proveedor
 
-        <div class="col-md-6 col-lg-4">
-
-            <div class="card shadow h-100">
-
-                <div class="card-body">
-
-                    <h5 class="card-title">
-                        Proveedor Tecnológico
-                    </h5>
-
-                    <p class="card-text">
-
-                        Empresa dedicada al suministro de equipos
-                        tecnológicos y accesorios para el sistema.
-
-                    </p>
-
-                    <span class="badge bg-primary">
-                        Tecnología
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Proveedor 2 -->
-
-        <div class="col-md-6 col-lg-4">
-
-            <div class="card shadow h-100">
-
-                <div class="card-body">
-
-                    <h5 class="card-title">
-                        Proveedor de Oficina
-                    </h5>
-
-                    <p class="card-text">
-
-                        Proveedor de materiales, papelería y
-                        suministros necesarios para la operación.
-
-                    </p>
-
-                    <span class="badge bg-success">
-                        Oficina
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Proveedor 3 -->
-
-        <div class="col-md-6 col-lg-4">
-
-            <div class="card shadow h-100">
-
-                <div class="card-body">
-
-                    <h5 class="card-title">
-                        Proveedor Multimedia
-                    </h5>
-
-                    <p class="card-text">
-
-                        Proporciona recursos y herramientas
-                        relacionadas con contenido multimedia.
-
-                    </p>
-
-                    <span class="badge bg-warning text-dark">
-                        Multimedia
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
+        </a>
 
     </div>
 
 
-    <!-- Mensaje informativo -->
+    <!-- MENSAJES -->
 
-    <div class="alert alert-info mt-5">
+    {% with mensajes = get_flashed_messages(with_categories=true) %}
 
-        <strong>Información:</strong>
+        {% if mensajes %}
 
-        Los datos mostrados son demostrativos.
+            {% for categoria, mensaje in mensajes %}
 
-    </div>
+                <div class="alert alert-{{ categoria }}" role="alert">
+
+                    {{ mensaje }}
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- PROVEEDORES REGISTRADOS -->
+
+    {% if proveedores %}
+
+        <div class="row g-4">
+
+            {% for proveedor in proveedores %}
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="card shadow h-100">
+
+                        <div class="card-body">
+
+                            <h5 class="card-title">
+
+                                {{ proveedor.nombre }}
+
+                            </h5>
+
+                            <p class="card-text">
+
+                                <strong>Correo:</strong>
+
+                                {{ proveedor.correo }}
+
+                            </p>
+
+                            <p class="card-text">
+
+                                <strong>Teléfono:</strong>
+
+                                {{ proveedor.telefono }}
+
+                            </p>
+
+                            <span class="badge bg-primary">
+
+                                Proveedor registrado
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <div class="alert alert-success text-center mt-5">
+
+            Actualmente existen
+
+            <strong>{{ proveedores|length }}</strong>
+
+            proveedores registrados.
+
+        </div>
+
+    {% else %}
+
+        <div class="alert alert-warning text-center mt-5">
+
+            Todavía no existen proveedores registrados.
+
+        </div>
+
+    {% endif %}
+
 
 </section>
 

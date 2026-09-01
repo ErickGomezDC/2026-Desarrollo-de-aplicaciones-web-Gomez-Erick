@@ -1,205 +1,238 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for, flash
+
+from forms.producto_form import ProductoForm
+from forms.cliente_form import ClienteForm
+from forms.proveedor_form import ProveedorForm
+from forms.facturacion_form import FacturacionForm
+
 
 app = Flask(__name__)
 
+# ==========================================
+# CONFIGURACIÓN DE FLASK-WTF Y CSRF
+# ==========================================
 
-# ==================================================
-# DATOS EN EJEMPLO DEL SISTEMA
-# ==================================================
-
-nombre_sistema = "Sistema de Gestión de Contenido Referencial"
-
-
-# ==================================================
-# PRODUCTOS / RECURSOS
-# Lista en diccionarios
-# ==================================================
-
-productos_lista = [
-
-    {
-        "nombre": "Ilustración digital",
-        "descripcion": "Referencia visual para proyectos de ilustración.",
-        "categoria": "Ilustración",
-        "estado": "Disponible"
-    },
-
-    {
-        "nombre": "Video de animación",
-        "descripcion": "Recurso audiovisual para estudiar movimiento.",
-        "categoria": "Animación",
-        "estado": "Disponible"
-    },
-
-    {
-        "nombre": "Modelo 3D",
-        "descripcion": "Referencia tridimensional para proyectos digitales.",
-        "categoria": "Modelado 3D",
-        "estado": "Agotado"
-    }
-
-]
+app.config["SECRET_KEY"] = "clave-secreta-proyecto-2026"
 
 
-# ==================================================
-# CLIENTES
-# Lista en diccionarios
-# ==================================================
+# ==========================================
+# LISTAS TEMPORALES
+# Los datos se mantienen mientras Flask
+# esté ejecutándose.
+# ==========================================
 
-clientes_lista = [
+productos_registrados = []
 
-    {
-        "nombre": "Carlos Pérez",
-        "correo": "carlos@email.com",
-        "tipo": "Ilustrador"
-    },
+clientes_registrados = []
 
-    {
-        "nombre": "María González",
-        "correo": "maria@email.com",
-        "tipo": "Diseñadora"
-    },
+proveedores_registrados = []
 
-    {
-        "nombre": "Juan Rodríguez",
-        "correo": "juan@email.com",
-        "tipo": "Animador"
-    }
-
-]
+facturas_registradas = []
 
 
-# ==================================================
-# PROVEEDORES
-# Lista en diccionarios
-# ==================================================
-
-proveedores_lista = [
-
-    {
-        "nombre": "Adobe",
-        "servicio": "Software creativo",
-        "estado": "Activo"
-    },
-
-    {
-        "nombre": "Canva",
-        "servicio": "Diseño gráfico",
-        "estado": "Activo"
-    },
-
-    {
-        "nombre": "Freepik",
-        "servicio": "Recursos gráficos",
-        "estado": "Activo"
-    }
-
-]
-
-
-# ==================================================
-# FACTURAS
-# Lista en diccionarios
-# ==================================================
-
-facturas_lista = [
-
-    {
-        "numero": "FAC-001",
-        "cliente": "Carlos Pérez",
-        "total": 25.50,
-        "estado": "Pagada"
-    },
-
-    {
-        "numero": "FAC-002",
-        "cliente": "María González",
-        "total": 40.00,
-        "estado": "Pendiente"
-    },
-
-    {
-        "numero": "FAC-003",
-        "cliente": "Juan Rodríguez",
-        "total": 15.75,
-        "estado": "Pagada"
-    }
-
-]
-
-
-# ==================================================
-# RUTA DE PRINCIPAL
-# ==================================================
+# ==========================================
+# RUTA PRINCIPAL
+# ==========================================
 
 @app.route("/")
 def inicio():
 
-    return render_template(
-        "index.html",
-        nombre_sistema=nombre_sistema
-    )
+    return render_template("index.html")
 
 
-# ==================================================
-# RUTA DE PRODUCTOS
-# ==================================================
+# ==========================================
+# PRODUCTOS
+# ==========================================
 
 @app.route("/productos")
 def productos():
 
     return render_template(
         "productos.html",
-        productos=productos_lista,
-        nombre_sistema=nombre_sistema
+        productos=productos_registrados
     )
 
 
-# ==================================================
-# RUTA DE CLIENTES
-# ==================================================
+# ==========================================
+# FORMULARIO DE PRODUCTOS
+# ==========================================
+
+@app.route("/productos/nuevo", methods=["GET", "POST"])
+def formulario_producto():
+
+    form = ProductoForm()
+
+    if form.validate_on_submit():
+
+        producto = {
+            "nombre": form.nombre.data,
+            "descripcion": form.descripcion.data,
+            "precio": form.precio.data
+        }
+
+        productos_registrados.append(producto)
+
+        print("Producto recibido:")
+        print("Nombre:", producto["nombre"])
+        print("Descripción:", producto["descripcion"])
+        print("Precio:", producto["precio"])
+
+        flash("Producto registrado correctamente.", "success")
+
+        return redirect(url_for("productos"))
+
+    return render_template(
+        "formulario_producto.html",
+        form=form
+    )
+
+
+# ==========================================
+# CLIENTES
+# ==========================================
 
 @app.route("/clientes")
 def clientes():
 
     return render_template(
         "clientes.html",
-        clientes=clientes_lista,
-        nombre_sistema=nombre_sistema
+        clientes=clientes_registrados
     )
 
 
-# ==================================================
-# RUTA DE PROVEEDORES
-# ==================================================
+# ==========================================
+# FORMULARIO DE CLIENTES
+# ==========================================
+
+@app.route("/clientes/nuevo", methods=["GET", "POST"])
+def formulario_cliente():
+
+    form = ClienteForm()
+
+    if form.validate_on_submit():
+
+        cliente = {
+            "nombre": form.nombre.data,
+            "correo": form.correo.data,
+            "telefono": form.telefono.data
+        }
+
+        clientes_registrados.append(cliente)
+
+        print("Cliente recibido:")
+        print("Nombre:", cliente["nombre"])
+        print("Correo:", cliente["correo"])
+        print("Teléfono:", cliente["telefono"])
+
+        flash("Cliente registrado correctamente.", "success")
+
+        return redirect(url_for("clientes"))
+
+    return render_template(
+        "formulario_cliente.html",
+        form=form
+    )
+
+
+# ==========================================
+# PROVEEDORES
+# ==========================================
 
 @app.route("/proveedores")
 def proveedores():
 
     return render_template(
         "proveedores.html",
-        proveedores=proveedores_lista,
-        nombre_sistema=nombre_sistema
+        proveedores=proveedores_registrados
     )
 
 
-# ==================================================
-# RUTA DE FACTURACIÓN
-# ==================================================
+# ==========================================
+# FORMULARIO DE PROVEEDORES
+# ==========================================
+
+@app.route("/proveedores/nuevo", methods=["GET", "POST"])
+def formulario_proveedor():
+
+    form = ProveedorForm()
+
+    if form.validate_on_submit():
+
+        proveedor = {
+            "nombre": form.nombre.data,
+            "correo": form.correo.data,
+            "telefono": form.telefono.data
+        }
+
+        proveedores_registrados.append(proveedor)
+
+        print("Proveedor recibido:")
+        print("Nombre:", proveedor["nombre"])
+        print("Correo:", proveedor["correo"])
+        print("Teléfono:", proveedor["telefono"])
+
+        flash("Proveedor registrado correctamente.", "success")
+
+        return redirect(url_for("proveedores"))
+
+    return render_template(
+        "formulario_proveedor.html",
+        form=form
+    )
+
+
+# ==========================================
+# FACTURACIÓN
+# ==========================================
 
 @app.route("/facturacion")
 def facturacion():
 
     return render_template(
         "facturacion.html",
-        facturas=facturas_lista,
-        nombre_sistema=nombre_sistema
+        facturas=facturas_registradas
     )
 
 
-# ==================================================
-# EJECUTAR LA APLICACIÓN
-# ==================================================
+# ==========================================
+# FORMULARIO DE FACTURACIÓN
+# ==========================================
+
+@app.route("/facturacion/nuevo", methods=["GET", "POST"])
+def formulario_facturacion():
+
+    form = FacturacionForm()
+
+    if form.validate_on_submit():
+
+        factura = {
+            "cliente": form.cliente.data,
+            "producto": form.producto.data,
+            "cantidad": form.cantidad.data,
+            "total": form.total.data
+        }
+
+        facturas_registradas.append(factura)
+
+        print("Factura recibida:")
+        print("Cliente:", factura["cliente"])
+        print("Producto:", factura["producto"])
+        print("Cantidad:", factura["cantidad"])
+        print("Total:", factura["total"])
+
+        flash("Factura registrada correctamente.", "success")
+
+        return redirect(url_for("facturacion"))
+
+    return render_template(
+        "formulario_facturacion.html",
+        form=form
+    )
+
+
+# ==========================================
+# EJECUTAR APLICACIÓN
+# ==========================================
 
 if __name__ == "__main__":
     app.run(debug=True)
