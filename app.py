@@ -1,4 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, flash
+import sqlite3
+import os
 
 from forms.producto_form import ProductoForm
 from forms.cliente_form import ClienteForm
@@ -8,35 +10,49 @@ from forms.facturacion_form import FacturacionForm
 
 app = Flask(__name__)
 
-# ==========================================
-# CONFIGURACIÓN DE FLASK-WTF Y CSRF
-# ==========================================
-
 app.config["SECRET_KEY"] = "clave-secreta-proyecto-2026"
 
 
 # ==========================================
-# LISTAS TEMPORALES
-# Los datos se mantienen mientras Flask
-# esté ejecutándose.
+# CONFIGURACIÓN DE LA BASE DE DATOS
 # ==========================================
 
-productos_registrados = []
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, "data")
+DATABASE = os.path.join(DATA_DIR, "ferreteria.db")
 
-clientes_registrados = []
 
-proveedores_registrados = []
+def get_db_connection():
+    conn = sqlite3.connect(DATABASE)
+    conn.row_factory = sqlite3.Row
+    return conn
 
-facturas_registradas = []
+
+def init_db():
+
+    os.makedirs(DATA_DIR, exist_ok=True)
+
+    conn = get_db_connection()
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS productos (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nombre TEXT NOT NULL,
+            descripcion TEXT NOT NULL,
+            precio REAL NOT NULL
+        )
+    """)
+
+    conn.commit()
+    conn.close()
 
 
 # ==========================================
-# RUTA PRINCIPAL
+# INICIO
 # ==========================================
 
 @app.route("/")
 def inicio():
-
     return render_template("index.html")
 
 
@@ -47,14 +63,23 @@ def inicio():
 @app.route("/productos")
 def productos():
 
+    conn = get_db_connection()
+
+    productos = conn.execute("""
+        SELECT id, nombre, descripcion, precio
+        FROM productos
+        ORDER BY id ASC
+    """).fetchall()
+
+    conn.close()
+
     return render_template(
         "productos.html",
-        productos=productos_registrados
+        productos=productos
     )
 
-
 # ==========================================
-# FORMULARIO DE PRODUCTOS
+# REGISTRAR PRODUCTO
 # ==========================================
 
 @app.route("/productos/nuevo", methods=["GET", "POST"])
@@ -64,18 +89,28 @@ def formulario_producto():
 
     if form.validate_on_submit():
 
-        producto = {
-            "nombre": form.nombre.data,
-            "descripcion": form.descripcion.data,
-            "precio": form.precio.data
-        }
+        nombre = form.nombre.data
+        descripcion = form.descripcion.data
+        precio = float(form.precio.data)
 
-        productos_registrados.append(producto)
+        conn = get_db_connection()
 
-        print("Producto recibido:")
-        print("Nombre:", producto["nombre"])
-        print("Descripción:", producto["descripcion"])
-        print("Precio:", producto["precio"])
+        conn.execute(
+            """
+            INSERT INTO productos
+            (nombre, descripcion, precio)
+            VALUES (?, ?, ?)
+            """,
+            (nombre, descripcion, precio)
+        )
+
+        conn.commit()
+        conn.close()
+
+        print("Producto guardado en SQLite:")
+        print("Nombre:", nombre)
+        print("Descripción:", descripcion)
+        print("Precio:", precio)
 
         flash("Producto registrado correctamente.", "success")
 
@@ -88,21 +123,35 @@ def formulario_producto():
 
 
 # ==========================================
+# ELIMINAR PRODUCTO
+# ==========================================
+
+@app.route("/productos/eliminar/<int:id>", methods=["POST"])
+def eliminar_producto(id):
+
+    conn = get_db_connection()
+
+    conn.execute(
+        "DELETE FROM productos WHERE id = ?",
+        (id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    flash("Producto eliminado correctamente.", "success")
+
+    return redirect(url_for("productos"))
+
+
+# ==========================================
 # CLIENTES
 # ==========================================
 
 @app.route("/clientes")
 def clientes():
+    return render_template("clientes.html")
 
-    return render_template(
-        "clientes.html",
-        clientes=clientes_registrados
-    )
-
-
-# ==========================================
-# FORMULARIO DE CLIENTES
-# ==========================================
 
 @app.route("/clientes/nuevo", methods=["GET", "POST"])
 def formulario_cliente():
@@ -111,18 +160,14 @@ def formulario_cliente():
 
     if form.validate_on_submit():
 
-        cliente = {
-            "nombre": form.nombre.data,
-            "correo": form.correo.data,
-            "telefono": form.telefono.data
-        }
-
-        clientes_registrados.append(cliente)
+        nombre = form.nombre.data
+        correo = form.correo.data
+        telefono = form.telefono.data
 
         print("Cliente recibido:")
-        print("Nombre:", cliente["nombre"])
-        print("Correo:", cliente["correo"])
-        print("Teléfono:", cliente["telefono"])
+        print("Nombre:", nombre)
+        print("Correo:", correo)
+        print("Teléfono:", telefono)
 
         flash("Cliente registrado correctamente.", "success")
 
@@ -140,16 +185,8 @@ def formulario_cliente():
 
 @app.route("/proveedores")
 def proveedores():
+    return render_template("proveedores.html")
 
-    return render_template(
-        "proveedores.html",
-        proveedores=proveedores_registrados
-    )
-
-
-# ==========================================
-# FORMULARIO DE PROVEEDORES
-# ==========================================
 
 @app.route("/proveedores/nuevo", methods=["GET", "POST"])
 def formulario_proveedor():
@@ -158,18 +195,14 @@ def formulario_proveedor():
 
     if form.validate_on_submit():
 
-        proveedor = {
-            "nombre": form.nombre.data,
-            "correo": form.correo.data,
-            "telefono": form.telefono.data
-        }
-
-        proveedores_registrados.append(proveedor)
+        nombre = form.nombre.data
+        correo = form.correo.data
+        telefono = form.telefono.data
 
         print("Proveedor recibido:")
-        print("Nombre:", proveedor["nombre"])
-        print("Correo:", proveedor["correo"])
-        print("Teléfono:", proveedor["telefono"])
+        print("Nombre:", nombre)
+        print("Correo:", correo)
+        print("Teléfono:", telefono)
 
         flash("Proveedor registrado correctamente.", "success")
 
@@ -187,16 +220,8 @@ def formulario_proveedor():
 
 @app.route("/facturacion")
 def facturacion():
+    return render_template("facturacion.html")
 
-    return render_template(
-        "facturacion.html",
-        facturas=facturas_registradas
-    )
-
-
-# ==========================================
-# FORMULARIO DE FACTURACIÓN
-# ==========================================
 
 @app.route("/facturacion/nuevo", methods=["GET", "POST"])
 def formulario_facturacion():
@@ -205,20 +230,16 @@ def formulario_facturacion():
 
     if form.validate_on_submit():
 
-        factura = {
-            "cliente": form.cliente.data,
-            "producto": form.producto.data,
-            "cantidad": form.cantidad.data,
-            "total": form.total.data
-        }
-
-        facturas_registradas.append(factura)
+        cliente = form.cliente.data
+        producto = form.producto.data
+        cantidad = form.cantidad.data
+        total = form.total.data
 
         print("Factura recibida:")
-        print("Cliente:", factura["cliente"])
-        print("Producto:", factura["producto"])
-        print("Cantidad:", factura["cantidad"])
-        print("Total:", factura["total"])
+        print("Cliente:", cliente)
+        print("Producto:", producto)
+        print("Cantidad:", cantidad)
+        print("Total:", total)
 
         flash("Factura registrada correctamente.", "success")
 
@@ -235,4 +256,7 @@ def formulario_facturacion():
 # ==========================================
 
 if __name__ == "__main__":
+
+    init_db()
+
     app.run(debug=True)
