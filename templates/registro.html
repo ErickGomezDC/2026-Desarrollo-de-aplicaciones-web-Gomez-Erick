@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}
+Registro de Usuario - Sistema Referencial
+{% endblock %}
+
+{% block content %}
+
+<section class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6 col-lg-5">
+
+            <div class="card shadow">
+
+                <div class="card-body p-4">
+
+                    <h2 class="text-center mb-4">
+                        Crear Usuario
+                    </h2>
+
+                    <p class="text-center text-muted mb-4">
+                        Registra un usuario para acceder al sistema.
+                    </p>
+
+
+                    <!-- MENSAJES -->
+
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+
+                        {% if messages %}
+
+                            {% for category, message in messages %}
+
+                                <div
+                                    class="alert alert-{{ category }}"
+                                    role="alert"
+                                >
+                                    {{ message }}
+                                </div>
+
+                            {% endfor %}
+
+                        {% endif %}
+
+                    {% endwith %}
+
+
+                    <!-- FORMULARIO -->
+
+                    <form method="POST">
+
+                        {{ form.hidden_tag() }}
+
+
+                        <!-- USUARIO -->
+
+                        <div class="mb-3">
+
+                            {{ form.usuario.label(class="form-label") }}
+
+                            {{ form.usuario(
+                                class="form-control",
+                                placeholder="Ingrese su usuario"
+                            ) }}
+
+                            {% for error in form.usuario.errors %}
+
+                                <div class="text-danger small mt-1">
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- CONTRASEÑA -->
+
+                        <div class="mb-3">
+
+                            {{ form.password.label(class="form-label") }}
+
+                            {{ form.password(
+                                class="form-control",
+                                placeholder="Ingrese su contraseña"
+                            ) }}
+
+                            {% for error in form.password.errors %}
+
+                                <div class="text-danger small mt-1">
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- BOTÓN -->
+
+                        <div class="d-grid">
+
+                            {{ form.submit(
+                                class="btn btn-primary"
+                            ) }}
+
+                        </div>
+
+                    </form>
+
+
+                    <div class="text-center mt-4">
+
+                        <p>
+                            ¿Ya tienes una cuenta?
+                        </p>
+
+                        <a
+                            href="{{ url_for('login') }}"
+                            class="btn btn-outline-secondary"
+                        >
+                            Iniciar sesión
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

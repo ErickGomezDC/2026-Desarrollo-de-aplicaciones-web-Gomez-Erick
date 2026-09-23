@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard - Sistema Referencial
+{% endblock %}
+
+{% block content %}
+
+<section class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow">
+
+                <div class="card-body p-5 text-center">
+
+                    <h1 class="mb-4">
+                        Panel de Usuario
+                    </h1>
+
+                    <p class="lead">
+                        Bienvenido al Sistema de Gestión de Contenido Referencial.
+                    </p>
+
+                    <hr class="my-4">
+
+                    <p>
+                        Has iniciado sesión como:
+                    </p>
+
+                    <h3 class="mb-4">
+                        {{ current_user.usuario }}
+                    </h3>
+
+                    <p class="text-muted">
+                        Esta sección está disponible únicamente para usuarios autenticados.
+                    </p>
+
+                    <a
+                        href="{{ url_for('productos') }}"
+                        class="btn btn-primary mt-3"
+                    >
+                        Ver productos
+                    </a>
+
+                    <a
+                        href="{{ url_for('logout') }}"
+                        class="btn btn-outline-danger mt-3"
+                    >
+                        Cerrar sesión
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

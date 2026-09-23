@@ -1,79 +1,147 @@
-<!-- ============================= -->
-<!-- NAVBAR REUTILIZABLE -->
-<!-- ============================= -->
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
 
     <div class="container">
 
+        <!-- LOGO / NOMBRE -->
+
         <a
             class="navbar-brand"
-            href="{{ url_for('inicio') }}">
-
+            href="{{ url_for('inicio') }}"
+        >
             Sistema Referencial
-
         </a>
+
+
+        <!-- BOTÓN PARA MÓVIL -->
 
         <button
             class="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#menuPrincipal"
-            aria-controls="menuPrincipal"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
             aria-expanded="false"
-            aria-label="Mostrar navegación">
-
+            aria-label="Mostrar navegación"
+        >
             <span class="navbar-toggler-icon"></span>
-
         </button>
+
+
+        <!-- MENÚ -->
 
         <div
             class="collapse navbar-collapse"
-            id="menuPrincipal">
+            id="navbarNav"
+        >
 
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <!-- INICIO -->
 
                 <li class="nav-item">
+
                     <a
                         class="nav-link"
-                        href="{{ url_for('inicio') }}">
+                        href="{{ url_for('inicio') }}"
+                    >
                         Inicio
                     </a>
+
                 </li>
 
+
+                <!-- PRODUCTOS -->
+
                 <li class="nav-item">
+
                     <a
                         class="nav-link"
-                        href="{{ url_for('productos') }}">
+                        href="{{ url_for('productos') }}"
+                    >
                         Productos
                     </a>
+
                 </li>
 
+
+                <!-- CLIENTES -->
+
                 <li class="nav-item">
+
                     <a
                         class="nav-link"
-                        href="{{ url_for('clientes') }}">
+                        href="{{ url_for('clientes') }}"
+                    >
                         Clientes
                     </a>
+
                 </li>
 
+
+                <!-- PROVEEDORES -->
+
                 <li class="nav-item">
+
                     <a
                         class="nav-link"
-                        href="{{ url_for('proveedores') }}">
+                        href="{{ url_for('proveedores') }}"
+                    >
                         Proveedores
                     </a>
+
                 </li>
 
+
+                <!-- FACTURACIÓN -->
+
                 <li class="nav-item">
+
                     <a
                         class="nav-link"
-                        href="{{ url_for('facturacion') }}">
+                        href="{{ url_for('facturacion') }}"
+                    >
                         Facturación
                     </a>
+
                 </li>
 
             </ul>
+
+
+            <!-- USUARIO Y AUTENTICACIÓN -->
+
+            {% if current_user.is_authenticated %}
+
+                <span class="navbar-text me-3">
+                    Usuario: {{ current_user.usuario }}
+                </span>
+
+
+                <a
+                    href="{{ url_for('logout') }}"
+                    class="btn btn-outline-danger"
+                >
+                    Cerrar sesión
+                </a>
+
+            {% else %}
+
+                <a
+                    href="{{ url_for('login') }}"
+                    class="btn btn-outline-primary me-2"
+                >
+                    Iniciar sesión
+                </a>
+
+
+                <a
+                    href="{{ url_for('registro') }}"
+                    class="btn btn-primary"
+                >
+                    Registrarse
+                </a>
+
+            {% endif %}
 
         </div>
 
