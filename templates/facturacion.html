@@ -1,175 +1,135 @@
 {% extends "base.html" %}
 
 {% block title %}
-Facturación - Sistema Referencial
+Facturación - Sistema de Gestión de Contenido Referencial
 {% endblock %}
 
 {% block content %}
 
-<section class="container py-5">
-
-    <div class="text-center mb-5">
-
-        <h1>
-            Facturación
-        </h1>
-
-        <p class="lead">
-
-            Consulta la información de las facturas
-            registradas en el sistema.
-
-        </p>
-
-    </div>
-
+<div class="container mt-4">
 
     <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <h2>
-            Facturación
-        </h2>
+        <h1>Facturación</h1>
 
-        <a
-            href="{{ url_for('formulario_facturacion') }}"
-            class="btn btn-success">
-
-            + Registrar Factura
-
+        <a href="{{ url_for('nueva_factura') }}"
+           class="btn btn-primary">
+            Nueva factura
         </a>
 
     </div>
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
 
-    <!-- MENSAJES -->
+            {% for category, message in messages %}
 
-    {% with mensajes = get_flashed_messages(with_categories=true) %}
-
-        {% if mensajes %}
-
-            {% for categoria, mensaje in mensajes %}
-
-                <div class="alert alert-{{ categoria }}" role="alert">
-
-                    {{ mensaje }}
-
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
                 </div>
 
             {% endfor %}
 
         {% endif %}
-
     {% endwith %}
 
 
-    <!-- FACTURAS -->
+    <div class="table-responsive">
 
-    {% if facturas %}
+        <table class="table table-bordered table-striped align-middle">
 
-        <div class="table-responsive">
+            <thead class="table-dark">
 
-            <table class="table table-striped table-hover table-bordered shadow">
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>Acciones</th>
+                </tr>
 
-                <thead class="table-dark">
+            </thead>
 
-                    <tr>
+            <tbody>
 
-                        <th>
-                            N.º
-                        </th>
+                {% for factura in facturas %}
 
-                        <th>
-                            Cliente
-                        </th>
+                <tr>
 
-                        <th>
-                            Producto
-                        </th>
+                    <td>
+                        {{ factura.id_factura }}
+                    </td>
 
-                        <th>
-                            Cantidad
-                        </th>
+                    <td>
+                        {{ factura.cliente }}
+                    </td>
 
-                        <th>
-                            Total
-                        </th>
+                    <td>
+                        {{ factura.producto }}
+                    </td>
 
-                        <th>
-                            Estado
-                        </th>
+                    <td>
+                        {{ factura.cantidad }}
+                    </td>
 
-                    </tr>
+                    <td>
+                        {{ factura.fecha }}
+                    </td>
 
-                </thead>
+                    <td>
+                        ${{ "%.2f"|format(factura.total) }}
+                    </td>
 
-                <tbody>
+                    <td>
 
-                    {% for factura in facturas %}
+                        <a href="{{ url_for('editar_factura', id=factura.id_factura) }}"
+                           class="btn btn-warning btn-sm">
+                            Editar
+                        </a>
 
-                    <tr>
+                        <form action="{{ url_for('eliminar_factura', id=factura.id_factura) }}"
+                              method="POST"
+                              class="d-inline p-0 m-0 border-0 bg-transparent"
+                              style="background: transparent !important; border: none !important;">
 
-                        <td>
-                            {{ loop.index }}
-                        </td>
+                            <input type="hidden"
+                                   name="csrf_token"
+                                   value="{{ csrf_token() }}">
 
-                        <td>
-                            {{ factura.cliente }}
-                        </td>
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm">
+                                Eliminar
+                            </button>
 
-                        <td>
-                            {{ factura.producto }}
-                        </td>
+                        </form>
 
-                        <td>
-                            {{ factura.cantidad }}
-                        </td>
+                    </td>
 
-                        <td>
-                            ${{ factura.total }}
-                        </td>
+                </tr>
 
-                        <td>
+                {% else %}
 
-                            <span class="badge bg-success">
+                <tr>
 
-                                Registrada
+                    <td colspan="7"
+                        class="text-center">
 
-                            </span>
+                        No existen facturas registradas.
 
-                        </td>
+                    </td>
 
-                    </tr>
+                </tr>
 
-                    {% endfor %}
+                {% endfor %}
 
-                </tbody>
+            </tbody>
 
-            </table>
+        </table>
 
-        </div>
+    </div>
 
-
-        <div class="alert alert-success text-center mt-4">
-
-            Actualmente existen
-
-            <strong>{{ facturas|length }}</strong>
-
-            facturas registradas.
-
-        </div>
-
-    {% else %}
-
-        <div class="alert alert-warning text-center mt-4">
-
-            Todavía no existen facturas registradas.
-
-        </div>
-
-    {% endif %}
-
-
-</section>
+</div>
 
 {% endblock %}

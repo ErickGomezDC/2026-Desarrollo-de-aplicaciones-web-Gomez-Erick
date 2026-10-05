@@ -6,7 +6,28 @@ Clientes - Sistema Referencial
 
 {% block content %}
 
+<style>
+    /* Formulario del botón eliminar */
+    .action-form {
+        display: inline-block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        vertical-align: middle;
+    }
+
+    /* Espacio entre Editar y Eliminar */
+    .action-form .btn {
+        margin-left: 5px;
+    }
+</style>
+
 <section class="container py-5">
+
+    <!-- TÍTULO -->
 
     <div class="text-center mb-5">
 
@@ -25,6 +46,8 @@ Clientes - Sistema Referencial
     </div>
 
 
+    <!-- ENCABEZADO Y BOTÓN REGISTRAR -->
+
     <div class="d-flex justify-content-between align-items-center mb-4">
 
         <h2>
@@ -33,10 +56,9 @@ Clientes - Sistema Referencial
 
         <a
             href="{{ url_for('formulario_cliente') }}"
-            class="btn btn-success">
-
+            class="btn btn-success"
+        >
             + Registrar Cliente
-
         </a>
 
     </div>
@@ -50,10 +72,11 @@ Clientes - Sistema Referencial
 
             {% for categoria, mensaje in mensajes %}
 
-                <div class="alert alert-{{ categoria }}" role="alert">
-
+                <div
+                    class="alert alert-{{ categoria }}"
+                    role="alert"
+                >
                     {{ mensaje }}
-
                 </div>
 
             {% endfor %}
@@ -63,7 +86,7 @@ Clientes - Sistema Referencial
     {% endwith %}
 
 
-    <!-- CLIENTES -->
+    <!-- TABLA DE CLIENTES -->
 
     {% if clientes %}
 
@@ -91,9 +114,14 @@ Clientes - Sistema Referencial
                             Teléfono
                         </th>
 
+                        <th>
+                            Acciones
+                        </th>
+
                     </tr>
 
                 </thead>
+
 
                 <tbody>
 
@@ -101,20 +129,74 @@ Clientes - Sistema Referencial
 
                     <tr>
 
+                        <!-- NÚMERO -->
+
                         <td>
                             {{ loop.index }}
                         </td>
+
+
+                        <!-- NOMBRE -->
 
                         <td>
                             {{ cliente.nombre }}
                         </td>
 
+
+                        <!-- CORREO -->
+
                         <td>
                             {{ cliente.correo }}
                         </td>
 
+
+                        <!-- TELÉFONO -->
+
                         <td>
                             {{ cliente.telefono }}
+                        </td>
+
+
+                        <!-- ACCIONES -->
+
+                        <td>
+
+                            <!-- EDITAR -->
+
+                            <a
+                                href="{{ url_for(
+                                    'editar_cliente',
+                                    id=cliente.id_cliente
+                                ) }}"
+                                class="btn btn-warning btn-sm"
+                            >
+                                Editar
+                            </a>
+
+
+                            <!-- ELIMINAR -->
+
+                            <form
+                                action="{{ url_for(
+                                    'eliminar_cliente',
+                                    id=cliente.id_cliente
+                                ) }}"
+                                method="POST"
+                                class="action-form"
+                            >
+
+                                {{ form.hidden_tag() }}
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-danger btn-sm"
+                                    onclick="return confirm('¿Está seguro de eliminar este cliente?');"
+                                >
+                                    Eliminar
+                                </button>
+
+                            </form>
+
                         </td>
 
                     </tr>
@@ -128,11 +210,15 @@ Clientes - Sistema Referencial
         </div>
 
 
+        <!-- CONTADOR -->
+
         <div class="alert alert-success text-center mt-4">
 
             Actualmente existen
 
-            <strong>{{ clientes|length }}</strong>
+            <strong>
+                {{ clientes|length }}
+            </strong>
 
             clientes registrados.
 
@@ -147,7 +233,6 @@ Clientes - Sistema Referencial
         </div>
 
     {% endif %}
-
 
 </section>
 

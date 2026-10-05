@@ -1,6 +1,12 @@
 from flask_wtf import FlaskForm
+
 from wtforms import StringField, EmailField
-from wtforms.validators import DataRequired, Length, Email
+
+from wtforms.validators import (
+    DataRequired,
+    Length,
+    Email
+)
 
 
 class ClienteForm(FlaskForm):
@@ -8,7 +14,9 @@ class ClienteForm(FlaskForm):
     nombre = StringField(
         "Nombre del cliente",
         validators=[
-            DataRequired(message="El nombre del cliente es obligatorio."),
+            DataRequired(
+                message="El nombre del cliente es obligatorio."
+            ),
             Length(
                 min=3,
                 max=100,
@@ -17,18 +25,26 @@ class ClienteForm(FlaskForm):
         ]
     )
 
+
     correo = EmailField(
         "Correo electrónico",
         validators=[
-            DataRequired(message="El correo electrónico es obligatorio."),
-            Email(message="Ingrese un correo electrónico válido.")
+            DataRequired(
+                message="El correo electrónico es obligatorio."
+            ),
+            Email(
+                message="Ingrese un correo electrónico válido."
+            )
         ]
     )
+
 
     telefono = StringField(
         "Teléfono",
         validators=[
-            DataRequired(message="El teléfono es obligatorio."),
+            DataRequired(
+                message="El teléfono es obligatorio."
+            ),
             Length(
                 min=7,
                 max=20,

@@ -1,15 +1,15 @@
 import os
-import mysql.connector
+import psycopg2
 
 
 DB_CONFIG = {
-    "host": os.getenv("MYSQL_HOST", "localhost"),
-    "user": os.getenv("MYSQL_USER", "root"),
-    "password": os.getenv("MYSQL_PASSWORD"),
-    "database": os.getenv("MYSQL_DATABASE", "sistema_referencial"),
-    "port": int(os.getenv("MYSQL_PORT", "3306"))
+    "host": os.getenv("POSTGRES_HOST", "localhost"),
+    "user": os.getenv("POSTGRES_USER", "postgres"),
+    "password": os.getenv("POSTGRES_PASSWORD"),
+    "dbname": os.getenv("POSTGRES_DB", "sistema_referencial"),
+    "port": int(os.getenv("POSTGRES_PORT", "5432"))
 }
 
 
 def obtener_conexion():
-    return mysql.connector.connect(**DB_CONFIG)
+    return psycopg2.connect(**DB_CONFIG)

@@ -1,14 +1,16 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, DecimalField
+from wtforms import StringField, TextAreaField, DecimalField, SelectField
 from wtforms.validators import DataRequired, Length, NumberRange
 
 
 class ProductoForm(FlaskForm):
 
     nombre = StringField(
-        "Nombre del producto",
+        "Nombre",
         validators=[
-            DataRequired(message="El nombre del producto es obligatorio."),
+            DataRequired(
+                message="El nombre del producto es obligatorio."
+            ),
             Length(
                 min=3,
                 max=100,
@@ -17,14 +19,15 @@ class ProductoForm(FlaskForm):
         ]
     )
 
-    descripcion = StringField(
+    descripcion = TextAreaField(
         "Descripción",
         validators=[
-            DataRequired(message="La descripción es obligatoria."),
+            DataRequired(
+                message="La descripción es obligatoria."
+            ),
             Length(
                 min=5,
-                max=200,
-                message="La descripción debe tener entre 5 y 200 caracteres."
+                message="La descripción debe tener al menos 5 caracteres."
             )
         ]
     )
@@ -32,10 +35,22 @@ class ProductoForm(FlaskForm):
     precio = DecimalField(
         "Precio",
         validators=[
-            DataRequired(message="El precio es obligatorio."),
+            DataRequired(
+                message="El precio es obligatorio."
+            ),
             NumberRange(
                 min=0,
                 message="El precio debe ser mayor o igual a 0."
+            )
+        ]
+    )
+
+    id_proveedor = SelectField(
+        "Proveedor",
+        coerce=int,
+        validators=[
+            DataRequired(
+                message="Debe seleccionar un proveedor."
             )
         ]
     )

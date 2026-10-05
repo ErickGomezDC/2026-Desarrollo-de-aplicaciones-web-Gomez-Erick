@@ -1,32 +1,66 @@
 {% extends "base.html" %}
 
+
+{% block title %}
+
+    {% if editar %}
+        Editar cliente
+    {% else %}
+        Nuevo cliente
+    {% endif %}
+
+    - Sistema Referencial
+
+{% endblock %}
+
+
 {% block content %}
 
-<div class="container mt-5 mb-5">
+<section class="container py-5">
 
     <div class="row justify-content-center">
 
-        <div class="col-md-8 col-lg-6">
+        <div class="col-md-8">
 
             <div class="card shadow">
 
                 <div class="card-body p-4">
 
-                    <h2 class="text-center mb-4">
-                        Registrar Cliente
-                    </h2>
+
+                    <!-- TÍTULO -->
+
+                    {% if editar %}
+
+                        <h1 class="mb-4">
+                            Editar cliente
+                        </h1>
+
+                    {% else %}
+
+                        <h1 class="mb-4">
+                            Nuevo cliente
+                        </h1>
+
+                    {% endif %}
+
+
+                    <!-- FORMULARIO -->
 
                     <form method="POST">
 
                         {{ form.hidden_tag() }}
 
+
+                        <!-- NOMBRE -->
+
                         <div class="mb-3">
 
-                            {{ form.nombre.label(class="form-label") }}
+                            {{ form.nombre.label(
+                                class="form-label"
+                            ) }}
 
                             {{ form.nombre(
-                                class="form-control",
-                                placeholder="Ingrese el nombre del cliente"
+                                class="form-control"
                             ) }}
 
                             {% for error in form.nombre.errors %}
@@ -40,13 +74,16 @@
                         </div>
 
 
+                        <!-- CORREO -->
+
                         <div class="mb-3">
 
-                            {{ form.correo.label(class="form-label") }}
+                            {{ form.correo.label(
+                                class="form-label"
+                            ) }}
 
                             {{ form.correo(
-                                class="form-control",
-                                placeholder="ejemplo@correo.com"
+                                class="form-control"
                             ) }}
 
                             {% for error in form.correo.errors %}
@@ -60,13 +97,16 @@
                         </div>
 
 
+                        <!-- TELÉFONO -->
+
                         <div class="mb-3">
 
-                            {{ form.telefono.label(class="form-label") }}
+                            {{ form.telefono.label(
+                                class="form-label"
+                            ) }}
 
                             {{ form.telefono(
-                                class="form-control",
-                                placeholder="0991234567"
+                                class="form-control"
                             ) }}
 
                             {% for error in form.telefono.errors %}
@@ -80,22 +120,38 @@
                         </div>
 
 
+                        <!-- BOTONES -->
+
                         <div class="d-flex gap-2">
+
+
+                            <!-- GUARDAR / ACTUALIZAR -->
 
                             <button
                                 type="submit"
-                                class="btn btn-success w-100">
+                                class="btn btn-primary"
+                            >
 
-                                Registrar Cliente
+                                {% if editar %}
+
+                                    Actualizar cliente
+
+                                {% else %}
+
+                                    Registrar cliente
+
+                                {% endif %}
 
                             </button>
 
+
+                            <!-- CANCELAR -->
+
                             <a
                                 href="{{ url_for('clientes') }}"
-                                class="btn btn-secondary w-100">
-
+                                class="btn btn-secondary"
+                            >
                                 Cancelar
-
                             </a>
 
                         </div>
@@ -110,6 +166,6 @@
 
     </div>
 
-</div>
+</section>
 
 {% endblock %}
